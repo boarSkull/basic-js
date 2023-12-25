@@ -5,26 +5,50 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+  members: [],
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.members.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    if (value === null) {
+    this.members.push('null');
+      
+    }else{
+    this.members.push(value);}
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (
+      position < 1 ||
+      position > this.members.length ||
+      !Number.isInteger(position)
+    ) {
+    this.members = [];
+
+      throw new Error('You can\'t remove incorrect link!');
+    }
+    this.members.splice(position-1, 1);
+    return this;
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.members.reverse();
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    let result = [];
+    result.push('( ');
+    for (let i = 0; i < this.members.length; i++) {
+      if (i !== this.members.length - 1) {
+        result.push(this.members[i]);
+        result.push(' )~~( ');
+      } else {
+        result.push(this.members[i]);
+      }
+    }
+    result.push(' )');
+    this.members = [];
+    return result.join('');
+  },
 };
 
 module.exports = {
